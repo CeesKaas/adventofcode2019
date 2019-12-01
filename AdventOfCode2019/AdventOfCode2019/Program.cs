@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Day1;
+using System;
 
 namespace AdventOfCode2019
 {
@@ -7,6 +8,12 @@ namespace AdventOfCode2019
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            Day1.Day1.Main();
+
+            Console.WriteLine("Done!");
+            Console.ReadLine();
         }
+
     }
 }

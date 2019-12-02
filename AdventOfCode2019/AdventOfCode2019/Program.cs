@@ -1,4 +1,5 @@
 ﻿using Day1;
+using Day2;
 using System;
 
 namespace AdventOfCode2019
@@ -9,7 +10,7 @@ namespace AdventOfCode2019
         {
             Console.WriteLine("Hello World!");
 
-            Day1.Day1.Main();
+            Day2.Day2.Execute();
 
             Console.WriteLine("Done!");
             Console.ReadLine();

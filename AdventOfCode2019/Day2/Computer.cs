@@ -8,19 +8,19 @@ namespace Day2
     {
         public int[] Calculate(int[] input)
         {
-            int position = 0;
+            int instructionPointer = 0;
             int parameter1 = 0, parameter2 = 0;
             int destination = 0;
             while (true)
             {
-                int opcode = input[position];
+                int opcode = input[instructionPointer];
                 int step;
                 switch (opcode)
                 {
                     case 1:
                     case 2:
                         {
-                            Span<int> parameters = input[(position + 1) .. (position + 4)];
+                            Span<int> parameters = input[(instructionPointer + 1) .. (instructionPointer + 4)];
                             parameter1 = input[parameters[0]];
                             parameter2 = input[parameters[1]];
                             destination = parameters[2];
@@ -30,7 +30,7 @@ namespace Day2
                     case 99:
                         return input;
                     default:
-                        throw new NotSupportedException($"operation {input[position]} at {position} was not a valid operation");
+                        throw new NotSupportedException($"operation {input[instructionPointer]} at {instructionPointer} was not a valid operation");
                 }
                 switch (opcode)
                 {
@@ -41,7 +41,7 @@ namespace Day2
                         input[destination] = parameter1 * parameter2;
                         break;
                 }
-                position += step;
+                instructionPointer += step;
             }
         }
     }

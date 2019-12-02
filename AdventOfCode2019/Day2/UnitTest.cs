@@ -17,9 +17,9 @@ namespace Day2
         public void ComputerTest(string input, string outputExpected)
         {
             Computer c = new Computer();
-            var parsedInput = input.Split(',').Select((s, index) => (index, int.Parse(s))).ToDictionary(_ => _.Item1, _ => _.Item2);
+            var parsedInput = input.Split(',').Select(int.Parse).ToArray();
             var result = c.Calculate(parsedInput);
-            var stringifiedResult = string.Join(",", result.Values);
+            var stringifiedResult = string.Join(",", result);
             Assert.That(stringifiedResult, Is.EqualTo(outputExpected));
         }
     }

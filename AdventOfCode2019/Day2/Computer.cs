@@ -6,7 +6,7 @@ namespace Day2
 {
     class Computer
     {
-        public Dictionary<int, int> Calculate(Dictionary<int, int> input)
+        public int[] Calculate(int[] input)
         {
             int position = 0;
             while (true)

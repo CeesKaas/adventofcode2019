@@ -8,7 +8,7 @@ namespace Day1
 {
     public static class Day1
     {
-        public static void Main()
+        public static void Execute()
         {
             var input = InputGetter.GetTransformedSplitInputForDay(1, new[] { '\n' }, InputTransformDay1.ParseLines);
             Part1(input);

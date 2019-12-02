@@ -9,26 +9,22 @@ namespace Day2
         public int[] Calculate(int[] input)
         {
             int position = 0;
+            int parameter1 = 0, parameter2 = 0;
+            int destination = 0;
             while (true)
             {
-                switch (input[position])
+                int opcode = input[position];
+                int step;
+                switch (opcode)
                 {
-                    case 1:// addition
+                    case 1:
+                    case 2:
                         {
-                            var a = input[input[position + 1]];
-                            var b = input[input[position + 2]];
-                            var destination = input[position + 3];
-                            input[destination] = a + b;
-                            position += 4;
-                        }
-                        break;
-                    case 2: // multiplication
-                        {
-                            var a = input[input[position + 1]];
-                            var b = input[input[position + 2]];
-                            var destination = input[position + 3];
-                            input[destination] = a * b;
-                            position += 4;
+                            Span<int> parameters = input[(position + 1) .. (position + 4)];
+                            parameter1 = input[parameters[0]];
+                            parameter2 = input[parameters[1]];
+                            destination = parameters[2];
+                            step = 4;
                         }
                         break;
                     case 99:
@@ -36,6 +32,16 @@ namespace Day2
                     default:
                         throw new NotSupportedException($"operation {input[position]} at {position} was not a valid operation");
                 }
+                switch (opcode)
+                {
+                    case 1:// addition
+                        input[destination] = parameter1 + parameter2;
+                        break;
+                    case 2: // multiplication
+                        input[destination] = parameter1 * parameter2;
+                        break;
+                }
+                position += step;
             }
         }
     }

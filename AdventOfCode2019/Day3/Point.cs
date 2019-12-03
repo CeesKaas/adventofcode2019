@@ -4,20 +4,22 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Day3
 {
-    public class Point : IEquatable<Point>
+    public class Point
     {
-        public Point(int X, int Y)
+        public Point(int x, int y, int stepsTakenFromOrigin)
         {
-            this.X = X;
-            this.Y = Y;
+            X = x;
+            Y = y;
+            StepsTakenFromOrigin = stepsTakenFromOrigin;
         }
 
         public int X { get; private set; }
         public int Y { get; private set; }
+        public int StepsTakenFromOrigin { get; }
 
         public Point CalculateNext(Vector v)
         {
-            var nextPoint = new Point(X, Y);
+            var nextPoint = new Point(X, Y, StepsTakenFromOrigin + v.Distance);
             switch (v.Direction)
             {
                 case Direction.U:
@@ -36,36 +38,51 @@ namespace Day3
             return nextPoint;
         }
 
-        public override bool Equals(object obj)
+        public bool IsOnLine(Line line)
         {
-            return Equals(obj as Point);
+            if (line.A.X == X || line.B.X == X)
+            {
+                var yMin = Math.Min(line.A.Y, line.B.Y);
+                var yMax = Math.Max(line.A.Y, line.B.Y);
+                if (Y >= yMin && Y <= yMax)
+                    return true;
+            }
+            else if (line.A.Y == Y || line.B.Y == Y)
+            {
+                var xMin = Math.Min(line.A.X, line.B.X);
+                var xMax = Math.Max(line.A.X, line.B.X);
+                if (X >= xMin && X <= xMax)
+                    return true;
+            }
+            return false;
         }
 
-        public bool Equals([AllowNull] Point other)
-        {
-            return other != null &&
-                   X == other.X &&
-                   Y == other.Y;
-        }
 
         public int DistanceTo(Point other)
         {
-            return Math.Abs(X + other.X) + Math.Abs(Y + other.Y);
+            int xDistance, yDistance;
+            if (X > other.X)
+            {
+                xDistance = X - other.X;
+            }
+            else
+            {
+                xDistance = other.X - X;
+            }
+            if (Y > other.Y)
+            {
+                yDistance = Y - other.Y;
+            }
+            else
+            {
+                yDistance = other.Y - Y;
+            }
+            return xDistance + yDistance;
         }
 
-        public override int GetHashCode()
+        public override string ToString()
         {
-            return HashCode.Combine(X, Y);
-        }
-
-        public static bool operator ==(Point left, Point right)
-        {
-            return EqualityComparer<Point>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(Point left, Point right)
-        {
-            return !(left == right);
+            return $"{X,4},{Y,4}";
         }
     }
 }

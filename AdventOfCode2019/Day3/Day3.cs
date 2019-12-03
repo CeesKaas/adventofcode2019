@@ -12,15 +12,22 @@ namespace Day3
         public static void Execute()
         {
             var input = InputGetter.GetTransformedSplitInputForDay(3, new[] { '\n' }, InputTransformDay3.ParseLines).ToArray();
-            Part1((int[])input.Clone());
-            Part2((int[])input.Clone());
+            Part1((Vector[][])input.Clone());
+            Part2((Vector[][])input.Clone());
         }
 
-        private static void Part1(int[] input)
+        private static void Part1(Vector[][] input)
         {
+            var points = input.Select(CalculateTurningPoints).Select(FindAllPointsOnPath).ToArray();
+
+            var crossings = FindCrossingPoints(points[0], points[1]);
+
+            var distanceOfClosest = FindClosestToOrigin(crossings);
+
+            Console.WriteLine(distanceOfClosest);
         }
 
-        private static void Part2(int[] input)
+        private static void Part2(Vector[][] input)
         {
         }
 
@@ -31,9 +38,9 @@ namespace Day3
         {
             var vectorsA = InputTransformDay3.ParseLines(a);
             var vectorsB = InputTransformDay3.ParseLines(b);
-            var pointA = CalculateTurningPoints(vectorsA);
-            var pointB = CalculateTurningPoints(vectorsB);
-            var crossings = FindCrossingPoints(pointA, pointB);
+            var pointsA = FindAllPointsOnPath(CalculateTurningPoints(vectorsA));
+            var pointsB = FindAllPointsOnPath(CalculateTurningPoints(vectorsB));
+            var crossings = FindCrossingPoints(pointsA, pointsB);
             var distanceOfClosest = FindClosestToOrigin(crossings);
             Assert.That(distanceOfClosest, Is.EqualTo(expectedDistance));
         }
@@ -46,6 +53,45 @@ namespace Day3
             {
                 p = p.CalculateNext(v);
                 points.Add(p);
+            }
+            return points.ToArray();
+        }
+        public static Point[] FindAllPointsOnPath(Point[] turningPoints)
+        {
+            Point a = turningPoints[0];
+            List<Point> points = new List<Point>();
+            foreach (var b in turningPoints)
+            {
+                points.Add(a);
+                if (a.X > b.X)
+                {
+                    for (int x = a.X; x > b.X; x--)
+                    {
+                        points.Add(new Point(x, a.Y));
+                    }
+                }
+                if (a.X < b.X)
+                {
+                    for (int x = a.X; x < b.X; x++)
+                    {
+                        points.Add(new Point(x, a.Y));
+                    }
+                }
+                if (a.Y > b.Y)
+                {
+                    for (int y = a.Y; y > b.Y; y--)
+                    {
+                        points.Add(new Point(a.X, y));
+                    }
+                }
+                if (a.Y < b.Y)
+                {
+                    for (int y = a.Y; y < b.Y; y++)
+                    {
+                        points.Add(new Point(a.X, y));
+                    }
+                }
+                a = b;
             }
             return points.ToArray();
         }

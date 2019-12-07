@@ -35,21 +35,5 @@ namespace Day5
                 Console.WriteLine(output);
             }
         }
-
-        private static void tryUntilValueFound(int[] source, int value, out int noun, out int verb)
-        {
-            noun = -1;
-            verb = -1;
-            var input = new int[source.Length];
-            for (noun = 0; noun <= 99; noun++)
-                for (verb = 0; verb <= 99; verb++)
-                {
-                    Array.Copy(source, 0, input, 0, source.Length);
-                    input[1] = noun;
-                    input[2] = verb;
-                    var result = new Computer().Calculate(input);
-                    if (result[0] == value) return;
-                }
-        }
     }
 }

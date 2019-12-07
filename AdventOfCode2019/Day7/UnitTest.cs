@@ -25,7 +25,7 @@ namespace Day7
             c.Inputs = new BlockingCollection<int>();
             c.Start();
             await c.Wait();
-            var stringifiedResult = string.Join(",", c.GetFinalState());
+            var stringifiedResult = string.Join(",", c.GetCurrentState());
             Assert.That(stringifiedResult, Is.EqualTo(outputExpected));
         }
         [Test]

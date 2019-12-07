@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,7 @@ namespace Day7
                             }
                             break;
                         case 99:
+                            End();
                             return;
                         default:
                             throw new NotSupportedException($"operation {_memoryState[instructionPointer]} at {instructionPointer} was not a valid operation");
@@ -113,9 +115,14 @@ namespace Day7
             }, TaskCreationOptions.LongRunning);
         }
 
-        public int[] GetFinalState()
+        private void End()
         {
-            return _memoryState;
+            Outputs.CompleteAdding();
+        }
+
+        public int[] GetCurrentState()
+        {
+            return _memoryState.ToArray();
         }
 
         public Task Wait()

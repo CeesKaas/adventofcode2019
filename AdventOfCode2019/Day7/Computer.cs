@@ -20,13 +20,13 @@ namespace Day7
         }
         public void Start()
         {
-            int instructionPointer = 0;
             if (Inputs == null)
             {
                 throw new InvalidOperationException("no Inputs defined");
             }
             _thread = Task.Factory.StartNew(() =>
             {
+                int instructionPointer = 0;
                 while (true)
                 {
                     int parameter1 = 0, parameter2 = 0, parameter3 = 0;
@@ -110,7 +110,7 @@ namespace Day7
                     }
                     instructionPointer += step;
                 }
-            });
+            }, TaskCreationOptions.LongRunning);
         }
 
         public int[] GetFinalState()
@@ -120,6 +120,8 @@ namespace Day7
 
         public Task Wait()
         {
+            if (_thread == null)
+                Start();
             return _thread;
         }
 

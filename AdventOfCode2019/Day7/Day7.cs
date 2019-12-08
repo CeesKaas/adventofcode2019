@@ -14,7 +14,7 @@ namespace Day7
         {
             var input = InputGetter.GetTransformedSplitInputForDay(7, new[] { ',' }, InputTransformDay7.ParseLines).ToArray();
             Part1(input.ToArray()).GetAwaiter().GetResult();
-            Part2(input);
+            Part2(input.ToArray()).GetAwaiter().GetResult();
         }
 
         private static async Task Part1(int[] input)

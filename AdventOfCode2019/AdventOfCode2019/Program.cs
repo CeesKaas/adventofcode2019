@@ -1,5 +1,4 @@
-﻿using Day7;
-using System;
+﻿using System;
 using System.Diagnostics;
 
 namespace AdventOfCode2019
@@ -11,7 +10,7 @@ namespace AdventOfCode2019
             Console.WriteLine("Hello World!");
 
             var s = Stopwatch.StartNew();
-            Day7.Day7.Execute();
+            Day8.Day8.Execute();
             s.Stop();
             Console.WriteLine($"Done! (took {s.Elapsed})");
 
